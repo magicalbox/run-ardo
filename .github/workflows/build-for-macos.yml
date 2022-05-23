@@ -1,6 +1,7 @@
 name: Run Ardo for MacOS
 
 on:
+  # workflow_dispatch and schedule are not working on non-default branch.  
   workflow_dispatch:  
   push:
     branches: 
