@@ -1,6 +1,7 @@
 name: Run Ardo for MacOS
 
 on:
+  workflow_dispatch:  
   push:
     branches: 
       - dev
@@ -13,12 +14,11 @@ on:
     paths-ignore:
       - 'README.md'
       - 'LICENSE'
-  schedule:
-    # "At 14:00." 
-    - cron: '0 14 * * *'
-  workflow_dispatch:
   repository_dispatch:
     types: ardo-build-macos
+  schedule:
+    # "At 14:00." 
+    - cron: '0 6 * * *'
 
 env:
   ARDOUR_VERSION: "latest"
