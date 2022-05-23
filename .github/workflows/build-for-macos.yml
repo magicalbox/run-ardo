@@ -1,6 +1,11 @@
 name: Run Ardo for MacOS
 
 on:
+  # https://github.community/t/reusable-workflows-secrets-and-environments/203695/18
+  workflow_call:
+    secrets:
+      GH_PAT:
+        required: true
   # workflow_dispatch and schedule are not working on non-default branch.  
   workflow_dispatch:  
   push:
@@ -70,7 +75,7 @@ jobs:
           perl -e "require XML::Parser"
 
       - name: Checkout Build Tools Source Code
-        if: github.event_name == 'push'
+        if: github.event_name != 'pull_request'
         uses: actions/checkout@v3
         with:
           repository: magicalbox/ardo
