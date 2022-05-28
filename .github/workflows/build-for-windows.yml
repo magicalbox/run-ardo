@@ -59,22 +59,22 @@ jobs:
               enable_opt: "ON"
               # gcc8
             }
-          - {
-              arch: x86_64,
-              warch: w64,
-              image_repo: debian,
-              image_tag: buster,
-              enable_opt: "OFF"
-              # gcc8
-            }
-          - {
-              arch: i686,
-              warch: w32,
-              image_repo: debian,
-              image_tag: buster,
-              enable_opt: "OFF"
-              # gcc8
-            }
+          # - {
+          #     arch: x86_64,
+          #     warch: w64,
+          #     image_repo: debian,
+          #     image_tag: buster,
+          #     enable_opt: "OFF"
+          #     # gcc8
+          #   }
+          # - {
+          #     arch: i686,
+          #     warch: w32,
+          #     image_repo: debian,
+          #     image_tag: buster,
+          #     enable_opt: "OFF"
+          #     # gcc8
+          #   }
     container:
       image: ${{ matrix.config.image_repo }}:${{ matrix.config.image_tag }}
       options: -v ${{ github.workspace }}:/home/ardour:rw
