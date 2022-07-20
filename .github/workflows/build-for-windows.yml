@@ -127,6 +127,14 @@ jobs:
           ref: ${{ env.ARDOUR_VERSION }}
           path: './src'
 
+      - name: Prepare
+        shell: bash
+        run: |
+          chmod a+x /home/ardour/scripts/ardour-build-tools/waf
+          chmod a+x /home/ardour/scripts/ardour-build-tools/rb-wscript
+          chmod a+x /home/ardour/scripts/ardour-build-tools/vamp-wscript
+          chmod a+x /home/ardour/src/waf
+
       - name: Prepare Directory
         shell: bash
         run: |
