@@ -28,7 +28,7 @@ env:
 jobs:
   ardo-build:
     name: Run Ardo for macOS ${{ matrix.config.arch }}
-    runs-on: macos-12
+    runs-on: macos-11
     strategy:
       fail-fast: false
       matrix:
