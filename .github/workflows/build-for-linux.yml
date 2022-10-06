@@ -259,13 +259,13 @@ jobs:
 
       - name: Generate sha256sum & Upload Binary
         if: startsWith(matrix.config.arch, 'arm')
-        # Ardour_arm64-6.8.0.run, Ardour_armhf-6.8.0.run
+        # Ardour_arm64-6.8.0.run, Ardour_armhf-6.9.0.run, Ardour-7.0.rc2.20-armhf.run
         shell: bash
         run: |
-          SHA256SUM=$(sha256sum /home/ardour/tmp/builds/A_Linux_${{ matrix.config.arch }}/Ardour_${{ matrix.config.arch }}-*.run | cut -d ' ' -f 1)
-          echo "${SHA256SUM}" > /home/ardour/tmp/builds/A_Linux_${{ matrix.config.arch }}/Ardour_${{ matrix.config.arch }}-${{ env.ARDOUR_VERSION }}.run.sha256sum
+          SHA256SUM=$(sha256sum /home/ardour/tmp/builds/A_Linux_${{ matrix.config.arch }}/Ardour-*-${{ matrix.config.arch }}.run | cut -d ' ' -f 1)
+          echo "${SHA256SUM}" > /home/ardour/tmp/builds/A_Linux_${{ matrix.config.arch }}/Ardour-${{ env.ARDOUR_VERSION }}-${{ matrix.config.arch }}.run.sha256sum
           echo "sha256sum: ${SHA256SUM}"
-          TEMP_DOWNLOAD_URL=$(sh /home/ardour/scripts/upload-services/${{ env.UPLOAD_SERVICE }}.sh /home/ardour/tmp/builds/A_Linux_${{ matrix.config.arch }}/Ardour_${{ matrix.config.arch }}-*.run)
+          TEMP_DOWNLOAD_URL=$(sh /home/ardour/scripts/upload-services/${{ env.UPLOAD_SERVICE }}.sh /home/ardour/tmp/builds/A_Linux_${{ matrix.config.arch }}/Ardour-*-${{ matrix.config.arch }}.run)
           echo Download URL is $TEMP_DOWNLOAD_URL
 
       - name: Upload Artifact
@@ -284,6 +284,6 @@ jobs:
         with:
           name: Ardour-Linux-Artifact
           path: |
-            ${{ github.workspace }}/tmp/builds/[CMA]_Linux_${{ matrix.config.arch }}/Ardour_${{ matrix.config.arch }}-*.run
-            ${{ github.workspace }}/tmp/builds/[CMA]_Linux_${{ matrix.config.arch }}/Ardour_${{ matrix.config.arch }}-*.run.sha256sum
+            ${{ github.workspace }}/tmp/builds/[CMA]_Linux_${{ matrix.config.arch }}/Ardour-*-${{ matrix.config.arch }}.run
+            ${{ github.workspace }}/tmp/builds/[CMA]_Linux_${{ matrix.config.arch }}/Ardour-*-${{ matrix.config.arch }}.run.sha256sum
           retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
