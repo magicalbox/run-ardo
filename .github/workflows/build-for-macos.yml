@@ -18,12 +18,12 @@ on:
     types: ardo-build-macos
 
 env:
-  ARDOUR_VERSION: "7.0-pre0"
+  ARDOUR_VERSION: "7.0"
   # available upload services: wetransfer.com, file.io, 0x0.st
   UPLOAD_SERVICE: wetransfer.com
   # https://community.ardour.org/srctar
   # https://fossies.org/linux/misc/Ardour-6.8.0.tar.bz2
-  ARTIFACT_RETENTION_DAYS: 1
+  ARTIFACT_RETENTION_DAYS: 3
 
 jobs:
   ardo-build:
