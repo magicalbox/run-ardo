@@ -160,6 +160,10 @@ jobs:
           ref: 'master'
           path: './src'
 
+      - name: Set ownership
+        run: |
+          chown -R $(id -u):$(id -g) /home/ardour    
+
       - name: Print GCC/G++ Version
         shell: bash
         run: |
