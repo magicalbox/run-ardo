@@ -51,14 +51,14 @@ jobs:
               enable_opt: "ON"
               # gcc8
             }
-          - {
-              arch: i686,
-              warch: w32,
-              image_repo: debian,
-              image_tag: buster,
-              enable_opt: "ON"
-              # gcc8
-            }
+          # - {
+          #     arch: i686,
+          #     warch: w32,
+          #     image_repo: debian,
+          #     image_tag: buster,
+          #     enable_opt: "ON"
+          #     # gcc8
+          #   }
           # - {
           #     arch: x86_64,
           #     warch: w64,
