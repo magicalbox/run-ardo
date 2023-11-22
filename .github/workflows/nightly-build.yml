@@ -3,7 +3,6 @@ name: Nightly Build
 on:
   workflow_dispatch:
   schedule:
-    # "At 14:00." 
     - cron: '0 6 * * *'
 
 # https://github.community/t/reusable-workflows-secrets-and-environments/203695/18
