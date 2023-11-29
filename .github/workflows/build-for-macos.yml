@@ -95,7 +95,7 @@ jobs:
 
       - name: Checkout Build Tools Source Code
         if: github.event_name != 'pull_request'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: magicalbox/ardo
           token: ${{ secrets.GH_PAT }} 
@@ -105,14 +105,14 @@ jobs:
 
       - name: Checkout Build Tools Source Code
         if: github.event_name == 'pull_request'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
           path: '.'
 
       # - name: Get Ardour Latest Release Source Code
-      #   uses: actions/checkout@v3
+      #   uses: actions/checkout@v4
       #   with:
       #     repository: 'Ardour/ardour'
       #     fetch-depth: 1
@@ -120,7 +120,7 @@ jobs:
       #     path: './src'
 
       - name: Get Ardour Latest Source Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'Ardour/ardour'
           fetch-depth: 0
