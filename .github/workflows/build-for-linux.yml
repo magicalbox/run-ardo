@@ -44,6 +44,9 @@ jobs:
       matrix:
         config:
           - {
+              # Do not use Python 3.12 and above version.
+              # 'distutils' and 'imp' packages are removed in python version 3.12, 
+              # so some gtk build maybe fail.
               arch: x86_64,
               image_repo: debian,
               image_tag: bullseye
