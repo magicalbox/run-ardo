@@ -154,6 +154,7 @@ jobs:
           SRCDIR: /home/ardour/tmp/winsrc
           TMPDIR: /home/ardour/tmp
           ROOT: /home/ardour
+          DIST: ${{ matrix.config.image_tag }}
 
       - name: Compile
         shell: bash
