@@ -18,7 +18,7 @@ on:
     types: ardo-build-macos
 
 env:
-  ARDOUR_VERSION: "8.2"
+  ARDOUR_VERSION: "8.4"
   # available upload services: wetransfer.com, file.io, 0x0.st
   UPLOAD_SERVICE: wetransfer.com
   # https://community.ardour.org/srctar
