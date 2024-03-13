@@ -223,10 +223,10 @@ jobs:
         shell: bash
         run: |
           cd /home/ardour/src
-          ./waf configure --prefix=/usr --configdir=/etc --strict --ptformat --with-backends=jack,alsa,pulseaudio,dummy --libjack=weak --optimize --cxx11 --freedesktop
-          ./waf -j$(nproc)
-          ./waf i18n
-          ./waf install
+          python3 ./waf configure --prefix=/usr --configdir=/etc --strict --ptformat --with-backends=jack,alsa,pulseaudio,dummy --libjack=weak --optimize --cxx11 --freedesktop
+          python3 ./waf -j$(nproc)
+          python3 ./waf i18n
+          python3 ./waf install
 
       - name: Package
         if: matrix.config.arch == 'x86_64'
