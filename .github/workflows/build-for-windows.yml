@@ -199,9 +199,9 @@ jobs:
 
       - name: Upload Artifact
         if: matrix.config.enable_opt == 'ON'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: Ardour-Cross-Compile-Win-Artifact
+          name: Ardour-Cross-Compile-Win-${{ matrix.config.warch }}-Artifact
           path: |
             ${{ github.workspace }}/tmp/Ardour-*-${{ matrix.config.warch }}-Setup.exe
             ${{ github.workspace }}/tmp/Ardour-*-${{ matrix.config.warch }}-Setup.exe.sha256sum
@@ -209,9 +209,9 @@ jobs:
 
       - name: Upload Artifact (Debug)
         if: matrix.config.enable_opt == 'OFF'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: Ardour-Cross-Compile-Win-Artifact-dbg
+          name: Ardour-Cross-Compile-Win-${{ matrix.config.warch }}-Artifact-dbg
           path: |
             ${{ github.workspace }}/tmp/Ardour-*-dbg-${{ matrix.config.warch }}-Setup.exe
             ${{ github.workspace }}/tmp/Ardour-*-dbg-${{ matrix.config.warch }}-Setup.exe.sha256sum
