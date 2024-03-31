@@ -260,9 +260,9 @@ jobs:
 
       - name: Upload Artifact
         if: matrix.config.arch == 'x86_64'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: Ardour-Linux-Artifact
+          name: Ardour-Linux-${{ matrix.config.arch }}-Artifact
           path: |
             ${{ github.workspace }}/src/tools/linux_packaging/Ardour-*-${{ matrix.config.arch }}.run
             ${{ github.workspace }}/src/tools/linux_packaging/Ardour-*-${{ matrix.config.arch }}.run.sha256sum
@@ -270,9 +270,9 @@ jobs:
 
       - name: Upload Artifact
         if: startsWith(matrix.config.arch, 'arm')
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: Ardour-Linux-Artifact
+          name: Ardour-Linux-${{ matrix.config.arch }}-Artifact
           path: |
             ${{ github.workspace }}/tmp/builds/[CMA]_Linux_${{ matrix.config.arch }}/Ardour-*-${{ matrix.config.arch }}.run
             ${{ github.workspace }}/tmp/builds/[CMA]_Linux_${{ matrix.config.arch }}/Ardour-*-${{ matrix.config.arch }}.run.sha256sum
