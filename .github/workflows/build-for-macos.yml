@@ -88,7 +88,7 @@ jobs:
       # the setuptools project can be installed: it still provides distutils.
       # https://docs.python.org/3.12/whatsnew/3.12.html
       - name: Setup Python 3.11
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
@@ -261,9 +261,9 @@ jobs:
           echo Download URL is $TEMP_DOWNLOAD_URL
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: Ardour-MacOS-Artifact
+          name: Ardour-MacOS-${{ matrix.config.arch }}-Artifact
           path: |
             ${{ github.workspace }}/src/tools/osx_packaging/Ardour-*.dmg
             ${{ github.workspace }}/src/tools/osx_packaging/Ardour-*.dmg.sha256sum
