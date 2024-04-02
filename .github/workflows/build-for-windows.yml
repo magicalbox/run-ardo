@@ -19,8 +19,8 @@ on:
 
 env:
   ARDOUR_VERSION: "6.9"
-  # available upload services: wetransfer.com, file.io, 0x0.st
-  UPLOAD_SERVICE: wetransfer.com
+  # available upload services: wetransfer.com, transfer.sh, file.io, 0x0.st
+  UPLOAD_SERVICE: transfer.sh
   # ardour spurce code tar ball, need check its sha256sums.
   # https://community.ardour.org/srctar
   # https://fossies.org/linux/misc/Ardour-6.8.0.tar.bz2
@@ -29,7 +29,7 @@ env:
 jobs:
   ardo-x-win-build:
     name: Ardo X-Build for Win ${{ matrix.config.arch }} with optimization ${{ matrix.config.enable_opt }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:

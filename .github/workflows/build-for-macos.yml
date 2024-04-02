@@ -19,8 +19,8 @@ on:
 
 env:
   ARDOUR_VERSION: "6.9"
-  # available upload services: wetransfer.com, file.io, 0x0.st
-  UPLOAD_SERVICE: wetransfer.com
+  # available upload services: wetransfer.com, transfer.sh, file.io, 0x0.st
+  UPLOAD_SERVICE: transfer.sh
   # https://community.ardour.org/srctar
   # https://fossies.org/linux/misc/Ardour-6.8.0.tar.bz2
   ARTIFACT_RETENTION_DAYS: 1
