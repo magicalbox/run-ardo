@@ -18,7 +18,7 @@ on:
     types: ardo-build-win
 
 env:
-  ARDOUR_VERSION: "8.4"
+  ARDOUR_VERSION: "8.5"
   # available upload services: wetransfer.com, transfer.sh, file.io, 0x0.st
   UPLOAD_SERVICE: transfer.sh
   # ardour spurce code tar ball, need check its sha256sums.
