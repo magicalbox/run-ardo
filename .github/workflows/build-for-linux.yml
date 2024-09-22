@@ -42,17 +42,17 @@ jobs:
               image_repo: debian,
               image_tag: bullseye
             }
+          # - {
+          #     # gcc8
+          #     arch: armhf,
+          #     image_repo: debian,
+          #     image_tag: buster
+          #   }
           - {
-              # gcc8
-              arch: armhf,
-              image_repo: debian,
-              image_tag: buster
-            }        
-          - {
-              # gcc8
+              # gcc10
               arch: arm64,
               image_repo: debian,
-              image_tag: buster
+              image_tag: bullseye
             }
     container:
       image: ${{ matrix.config.image_repo }}:${{ matrix.config.image_tag }}
@@ -178,7 +178,7 @@ jobs:
         if: matrix.config.arch == 'arm64'
         shell: bash
         run: |
-          echo "XARCH=${{ matrix.config.arch }}" >> $GITHUB_ENV
+          echo "DIST=${{ matrix.config.image_tag }}" >> $GITHUB_ENV
           echo "SRCDIR=/home/ardour/tmp/winsrc"  >> $GITHUB_ENV
           echo "TMPDIR=/home/ardour/tmp" >> $GITHUB_ENV
           echo "ROOT=/home/ardour" >> $GITHUB_ENV
@@ -215,7 +215,7 @@ jobs:
         if: startsWith(matrix.config.arch, 'arm')
         shell: bash
         run: |
-          bash /home/ardour/scripts/ardour-build-tools/x-armhf.sh
+          bash /home/ardour/scripts/ardour-build-tools/x-linux-arm64.sh
 
       - name: Compile
         if: matrix.config.arch == 'x86_64'
