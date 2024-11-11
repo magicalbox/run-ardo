@@ -178,7 +178,7 @@ jobs:
         shell: bash
         run: |
           cd ${{ github.workspace }}/src
-          ./waf configure --strict --with-backends=jack,coreaudio,dummy --ptformat --optimize --cxx11
+          ./waf configure --strict --with-backends=jack,coreaudio,dummy --ptformat --optimize --cxx17
           ./waf -j$(sysctl -n hw.logicalcpu)
           ./waf i18n
           ./waf install
@@ -208,7 +208,7 @@ jobs:
             --with-backends=jack,coreaudio,dummy \
             --ptformat \
             --optimize \
-            --cxx11 \
+            --cxx17 \
             --use-libc++ \
             --arm64
           ./waf -j$(sysctl -n hw.logicalcpu)
