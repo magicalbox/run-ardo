@@ -37,7 +37,7 @@ env:
 jobs:
   ardo-build:
     name: Ardo Build for MacOS ${{ matrix.config.arch }}
-    runs-on: macos-12
+    runs-on: macos-13
     strategy:
       fail-fast: false
       matrix:
@@ -61,6 +61,17 @@ jobs:
       #     curl -sSL http://curl.haxx.se/ca/cacert.pem >> cacert.pem
 
       #     mv -v cacert.pem /usr/local/etc/openssl@1.1/certs
+
+      # clang 14
+      - name: Fixed xcode version to 14.2
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '14.2'
+
+      - name: Check clang version
+        shell: bash
+        run: |
+          clang --version
 
       - name: Check Perl
         shell: bash
