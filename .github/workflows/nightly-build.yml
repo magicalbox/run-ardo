@@ -5,7 +5,7 @@ on:
   schedule:
     - cron: '0 6 * * *'
 
-# https://github.community/t/reusable-workflows-secrets-and-environments/203695/18
+# https://docs.github.com/en/actions/sharing-automations/reusing-workflows
 jobs:
   reuseable1:
     uses:  magicalbox/run-ardo/.github/workflows/build-for-linux.yml@dev
