@@ -18,9 +18,9 @@ on:
     types: ardo-build-win
 
 env:
-  ARDOUR_VERSION: "8.12"
+  ARDOUR_VERSION: "9.0"
   # available upload services: wetransfer.com, transfer.sh, file.io, 0x0.st
-  UPLOAD_SERVICE: transfer.sh
+  # UPLOAD_SERVICE: transfer.sh
   # ardour spurce code tar ball, need check its sha256sums.
   # https://community.ardour.org/srctar
   # https://fossies.org/linux/misc/Ardour-6.8.0.tar.bz2
@@ -41,7 +41,7 @@ jobs:
               arch: x86_64,
               warch: w64,
               image_repo: debian,
-              image_tag: buster,
+              image_tag: bullseye,
               enable_opt: "ON"
               # gcc8
             }
@@ -49,7 +49,7 @@ jobs:
           #     arch: i686,
           #     warch: w32,
           #     image_repo: debian,
-          #     image_tag: buster,
+          #     image_tag: bullseye,
           #     enable_opt: "ON"
           #     # gcc8
           #   }
@@ -57,7 +57,7 @@ jobs:
               arch: x86_64,
               warch: w64,
               image_repo: debian,
-              image_tag: buster,
+              image_tag: bullseye,
               enable_opt: "OFF"
               # gcc8
             }
@@ -65,7 +65,7 @@ jobs:
           #     arch: i686,
           #     warch: w32,
           #     image_repo: debian,
-          #     image_tag: buster,
+          #     image_tag: bullseye,
           #     enable_opt: "OFF"
           #     # gcc8
           #   }
@@ -93,7 +93,6 @@ jobs:
             ocaml-nox \
             gperf \
             meson \
-            python \
             python3 \
             python3-pip \
             build-essential \
@@ -106,7 +105,7 @@ jobs:
 
       - name: Checkout Build Tools Source Code
         if: github.event_name == 'push'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: magicalbox/ardo
           token: ${{ secrets.GH_PAT }} 
@@ -116,14 +115,14 @@ jobs:
 
       - name: Checkout Build Tools Source Code
         if: github.event_name == 'pull_request'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
           path: '.'
 
       - name: Get Ardo Latest Release Source Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'Ardour/ardour'
           fetch-depth: 1
@@ -175,7 +174,7 @@ jobs:
           TMPDIR: /home/ardour/tmp
           SRCCACHE: /home/ardour/tmp/winsrc
 
-      - name: Generate sha256sum & Upload Binary
+      - name: Generate sha256sum
         if: matrix.config.enable_opt == 'ON'
         # /home/ardour/tmp/Ardour-6.8.0-w64-Setup.exe
         shell: bash
@@ -183,10 +182,17 @@ jobs:
           SHA256SUM=$(sha256sum /home/ardour/tmp/Ardour-*-${{ matrix.config.warch }}-Setup.exe | cut -d ' ' -f 1)
           echo "${SHA256SUM}" > /home/ardour/tmp/Ardour-${{ env.ARDOUR_VERSION }}-${{ matrix.config.warch }}-Setup.exe.sha256sum
           echo "sha256sum: ${SHA256SUM}"
-          TEMP_DOWNLOAD_URL=$(sh /home/ardour/scripts/upload-services/${{ env.UPLOAD_SERVICE }}.sh /home/ardour/tmp/Ardour-*-${{ matrix.config.warch }}-Setup.exe)
-          echo Download URL is $TEMP_DOWNLOAD_URL
 
-      - name: Generate sha256sum & Upload Binary (Debug)
+      # - name: Upload Binary
+      #   if: matrix.config.enable_opt == 'ON'
+      #   # /home/ardour/tmp/Ardour-6.8.0-w64-Setup.exe
+      #   shell: bash
+      #   run: |
+      #     SHA256SUM=$(sha256sum /home/ardour/tmp/Ardour-*-${{ matrix.config.warch }}-Setup.exe | cut -d ' ' -f 1)
+      #     echo "${SHA256SUM}" > /home/ardour/tmp/Ardour-${{ env.ARDOUR_VERSION }}-${{ matrix.config.warch }}-Setup.exe.sha256sum
+      #     echo "sha256sum: ${SHA256SUM}"
+
+      - name: Generate sha256sum (Debug)
         if: matrix.config.enable_opt == 'OFF'
         # /home/ardour/tmp/Ardour-6.8.0-dbg-w64-Setup.exe
         shell: bash
@@ -194,12 +200,18 @@ jobs:
           SHA256SUM=$(sha256sum /home/ardour/tmp/Ardour-*-dbg-${{ matrix.config.warch }}-Setup.exe | cut -d ' ' -f 1)
           echo "${SHA256SUM}" > /home/ardour/tmp/Ardour-${{ env.ARDOUR_VERSION }}-dbg-${{ matrix.config.warch }}-Setup.exe.sha256sum
           echo "sha256sum: ${SHA256SUM}"
-          TEMP_DOWNLOAD_URL=$(sh /home/ardour/scripts/upload-services/${{ env.UPLOAD_SERVICE }}.sh /home/ardour/tmp/Ardour-*-dbg-${{ matrix.config.warch }}-Setup.exe)
-          echo Download URL is $TEMP_DOWNLOAD_URL
+
+      # - name: Upload Binary (Debug)
+      #   if: matrix.config.enable_opt == 'OFF'
+      #   # /home/ardour/tmp/Ardour-6.8.0-dbg-w64-Setup.exe
+      #   shell: bash
+      #   run: |
+      #     TEMP_DOWNLOAD_URL=$(sh /home/ardour/scripts/upload-services/${{ env.UPLOAD_SERVICE }}.sh /home/ardour/tmp/Ardour-*-dbg-${{ matrix.config.warch }}-Setup.exe)
+      #     echo Download URL is $TEMP_DOWNLOAD_URL
 
       - name: Upload Artifact
         if: matrix.config.enable_opt == 'ON'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: Ardour-Cross-Compile-Win-${{ matrix.config.warch }}-Artifact
           path: |
@@ -209,7 +221,7 @@ jobs:
 
       - name: Upload Artifact (Debug)
         if: matrix.config.enable_opt == 'OFF'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: Ardour-Cross-Compile-Win-${{ matrix.config.warch }}-Artifact-dbg
           path: |
