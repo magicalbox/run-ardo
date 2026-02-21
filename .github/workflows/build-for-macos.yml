@@ -51,7 +51,7 @@ jobs:
 
       #     mv -v cacert.pem /usr/local/etc/openssl@1.1/certs
 
-      # clang 15
+      # clang 16
       - name: Fixed xcode version to 16.2
         run: sudo xcode-select -s /Applications/Xcode_16.2.app
 
@@ -163,10 +163,10 @@ jobs:
         shell: bash
         run: |
           cd ${{ github.workspace }}/src
-          python3 waf configure --strict --with-backends=jack,coreaudio,dummy --ptformat --optimize --cxx17
-          python3 waf -j$(sysctl -n hw.logicalcpu)
-          python3 waf i18n
-          sudo python3 waf install
+          python3 ./waf configure --strict --with-backends=jack,coreaudio,dummy --ptformat --optimize --cxx17
+          python3 ./waf -j$(sysctl -n hw.logicalcpu)
+          python3 ./waf i18n
+          sudo python3 ./waf install
 
       - name: Package
         shell: bash
