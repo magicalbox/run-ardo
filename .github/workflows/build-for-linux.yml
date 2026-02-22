@@ -18,9 +18,7 @@ on:
     types: ardo-build-linux
 
 env:
-  ARDOUR_VERSION: "6.9"
-  # available upload services: wetransfer.com, transfer.sh, file.io, 0x0.st
-  UPLOAD_SERVICE: transfer.sh
+  ARDOUR_VERSION: "9.0"
   # ardour spurce code tar ball, need check its sha256sums.
   # https://community.ardour.org/srctar
   # https://fossies.org/linux/misc/Ardour-6.8.0.tar.bz2
@@ -74,8 +72,7 @@ jobs:
             build-essential \
             ccache \
             wget \
-            python \
-            python-dev \
+            python3-dev \
             libxml-parser-perl \
             file \
             libx11-dev \
@@ -89,7 +86,7 @@ jobs:
             libxcb-shm0-dev \
             libpulse-dev \
             libasound-dev \
-            libjack-dev \
+            libjack-jackd2-dev \
             ladspa-sdk \
             makeself \
             chrpath \
@@ -111,8 +108,7 @@ jobs:
             build-essential \
             ccache \
             wget \
-            python \
-            python-dev \
+            python3-dev \
             file \
             ocaml-nox \
             gperf \
@@ -122,7 +118,7 @@ jobs:
 
       - name: Checkout Build Tools Source Code
         if: github.event_name == 'push'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: magicalbox/ardo
           token: ${{ secrets.GH_PAT }} 
@@ -132,14 +128,14 @@ jobs:
 
       - name: Checkout Build Tools Source Code
         if: github.event_name == 'pull_request'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
           path: '.'
 
       - name: Get Ardour Latest Release Source Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'Ardour/ardour'
           fetch-depth: 1
@@ -214,6 +210,8 @@ jobs:
       - name: Install Build Stack & Compile & Package
         if: startsWith(matrix.config.arch, 'arm')
         shell: bash
+        env:
+          NOGITPULL: 1
         run: |
           bash /home/ardour/scripts/ardour-build-tools/x-linux-arm64.sh
 
@@ -236,18 +234,16 @@ jobs:
           bash ./build --public --harvid
           bash ./package --public --singlearch --makeself
 
-      - name: Generate sha256sum & Upload Binary
+      - name: Generate sha256sum
         if: matrix.config.arch == 'x86_64'
         # Ardour-6.8.0-x86_64.run
         shell: bash
         run: |
           SHA256SUM=$(sha256sum /home/ardour/src/tools/linux_packaging/Ardour-*-${{ matrix.config.arch }}.run | cut -d ' ' -f 1)
           echo "${SHA256SUM}" > /home/ardour/src/tools/linux_packaging/Ardour-${{ env.ARDOUR_VERSION }}-${{ matrix.config.arch }}.run.sha256sum
-          echo "sha256sum: ${SHA256SUM}"
-          TEMP_DOWNLOAD_URL=$(sh /home/ardour/scripts/upload-services/${{ env.UPLOAD_SERVICE }}.sh /home/ardour/src/tools/linux_packaging/Ardour-*-${{ matrix.config.arch }}.run)
-          echo Download URL is $TEMP_DOWNLOAD_URL      
+          echo "sha256sum: ${SHA256SUM}"    
 
-      - name: Generate sha256sum & Upload Binary
+      - name: Generate sha256sum
         if: startsWith(matrix.config.arch, 'arm')
         # Ardour_arm64-6.8.0.run, Ardour_armhf-6.9.0.run, Ardour-7.0.rc2.20-armhf.run
         shell: bash
@@ -255,12 +251,10 @@ jobs:
           SHA256SUM=$(sha256sum /home/ardour/tmp/builds/A_Linux_${{ matrix.config.arch }}/Ardour-*-${{ matrix.config.arch }}.run | cut -d ' ' -f 1)
           echo "${SHA256SUM}" > /home/ardour/tmp/builds/A_Linux_${{ matrix.config.arch }}/Ardour-${{ env.ARDOUR_VERSION }}-${{ matrix.config.arch }}.run.sha256sum
           echo "sha256sum: ${SHA256SUM}"
-          TEMP_DOWNLOAD_URL=$(sh /home/ardour/scripts/upload-services/${{ env.UPLOAD_SERVICE }}.sh /home/ardour/tmp/builds/A_Linux_${{ matrix.config.arch }}/Ardour-*-${{ matrix.config.arch }}.run)
-          echo Download URL is $TEMP_DOWNLOAD_URL
 
       - name: Upload Artifact
         if: matrix.config.arch == 'x86_64'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: Ardour-Linux-${{ matrix.config.arch }}-Artifact
           path: |
@@ -270,7 +264,7 @@ jobs:
 
       - name: Upload Artifact
         if: startsWith(matrix.config.arch, 'arm')
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: Ardour-Linux-${{ matrix.config.arch }}-Artifact
           path: |
