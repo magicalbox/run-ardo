@@ -18,7 +18,7 @@ on:
     types: ardo-build-macos
 
 env:
-  ARDOUR_VERSION: "9.1"
+  ARDOUR_VERSION: "9.2"
   # https://community.ardour.org/srctar
   # https://fossies.org/linux/misc/Ardour-6.8.0.tar.bz2
   ARTIFACT_RETENTION_DAYS: 3
