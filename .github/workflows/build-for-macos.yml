@@ -18,7 +18,7 @@ on:
     types: ardo-build-macos
 
 env:
-  ARDOUR_VERSION: "9.2"
+  ARDOUR_VERSION: "9.7"
   # https://community.ardour.org/srctar
   # https://fossies.org/linux/misc/Ardour-6.8.0.tar.bz2
   ARTIFACT_RETENTION_DAYS: 3
@@ -92,7 +92,7 @@ jobs:
 
       - name: Checkout Build Tools Source Code
         if: github.event_name == 'push'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: magicalbox/ardo
           token: ${{ secrets.GH_PAT }} 
@@ -102,14 +102,14 @@ jobs:
 
       - name: Checkout Build Tools Source Code
         if: github.event_name == 'pull_request'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
           path: '.'
 
       - name: Get Ardo Latest Release Source Code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: 'Ardour/ardour'
           fetch-depth: 1
@@ -181,7 +181,7 @@ jobs:
           echo "sha256sum: ${SHA256SUM}"
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: Ardour-MacOS-${{ matrix.config.arch }}-Artifact
           path: |

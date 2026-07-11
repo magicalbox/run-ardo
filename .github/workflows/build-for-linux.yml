@@ -18,7 +18,7 @@ on:
     types: ardo-build-linux
 
 env:
-  ARDOUR_VERSION: "9.2"
+  ARDOUR_VERSION: "9.7"
   # ardour spurce code tar ball, need check its sha256sums.
   # https://community.ardour.org/srctar
   # https://fossies.org/linux/misc/Ardour-6.8.0.tar.bz2
@@ -118,7 +118,7 @@ jobs:
 
       - name: Checkout Build Tools Source Code
         if: github.event_name == 'push'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: magicalbox/ardo
           token: ${{ secrets.GH_PAT }} 
@@ -128,14 +128,14 @@ jobs:
 
       - name: Checkout Build Tools Source Code
         if: github.event_name == 'pull_request'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
           path: '.'
 
       - name: Get Ardo Latest Release Source Code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: 'Ardour/ardour'
           fetch-depth: 1
@@ -254,7 +254,7 @@ jobs:
 
       - name: Upload Artifact
         if: matrix.config.arch == 'x86_64'
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: Ardour-Linux-${{ matrix.config.arch }}-Artifact
           path: |
@@ -264,7 +264,7 @@ jobs:
 
       - name: Upload Artifact
         if: startsWith(matrix.config.arch, 'arm')
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: Ardour-Linux-${{ matrix.config.arch }}-Artifact
           path: |
