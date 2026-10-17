@@ -48,7 +48,7 @@ jobs:
               arch: x86_64,
               warch: w64,
               image_repo: debian,
-              image_tag: bullseye,
+              image_tag: trixie,
               enable_opt: "ON"
               # gcc10
             }
@@ -56,7 +56,7 @@ jobs:
           #     arch: i686,
           #     warch: w32,
           #     image_repo: debian,
-          #     image_tag: bullseye,
+          #     image_tag: trixie,
           #     enable_opt: "ON"
           #     # gcc10
           #   }
@@ -64,7 +64,7 @@ jobs:
           #     arch: x86_64,
           #     warch: w64,
           #     image_repo: debian,
-          #     image_tag: bullseye,
+          #     image_tag: trixie,
           #     enable_opt: "OFF"
           #     # gcc10
           #   }
@@ -72,7 +72,7 @@ jobs:
           #     arch: i686,
           #     warch: w32,
           #     image_repo: debian,
-          #     image_tag: bullseye,
+          #     image_tag: trixie,
           #     enable_opt: "OFF"
           #     # gcc10
           #   }
@@ -112,7 +112,7 @@ jobs:
 
       - name: Checkout Build Tools Source Code
         if: github.event_name != 'pull_request'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: magicalbox/ardo
           token: ${{ secrets.GH_PAT }} 
@@ -122,7 +122,7 @@ jobs:
 
       - name: Checkout Build Tools Source Code
         if: github.event_name == 'pull_request'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
@@ -137,7 +137,7 @@ jobs:
       #     path: './src'
 
       - name: Get Ardour Latest Source Code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: 'Ardour/ardour'
           fetch-depth: 0
@@ -209,7 +209,7 @@ jobs:
 
       - name: Upload Artifact
         if: matrix.config.enable_opt == 'ON'
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: Ardour-Cross-Compile-Win-${{ matrix.config.warch }}-Artifact
           path: |
@@ -219,7 +219,7 @@ jobs:
 
       - name: Upload Artifact (Debug)
         if: matrix.config.enable_opt == 'OFF'
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: Ardour-Cross-Compile-Win-${{ matrix.config.warch }}-Artifact-dbg
           path: |

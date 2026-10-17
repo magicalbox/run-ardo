@@ -35,7 +35,8 @@ env:
 jobs:
   ardo-build:
     name: Ardo Build for MacOS ${{ matrix.config.arch }}
-    runs-on: macos-14
+    # https://github.com/actions/runner-images/blob/main/images/macos/macos-15-Readme.md
+    runs-on: macos-15
     strategy:
       fail-fast: false
       matrix:
@@ -58,8 +59,8 @@ jobs:
       #     mv -v cacert.pem /usr/local/etc/openssl@1.1/certs
 
       # clang 16
-      - name: Fixed xcode version to 16.2
-        run: sudo xcode-select -s /Applications/Xcode_16.2.app
+      - name: Fixed xcode version to 16.4
+        run: sudo xcode-select -s /Applications/Xcode_16.4.app
 
       - name: Check clang version
         shell: bash
@@ -92,14 +93,14 @@ jobs:
       # the setuptools project can be installed: it still provides distutils.
       # https://docs.python.org/3.12/whatsnew/3.12.html
       - name: Setup Python 3.11
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.11'
           architecture: 'arm64' # optional x86, x64 or arm64. If the input is not specified, the architecture defaults to the host OS architecture
 
       - name: Checkout Build Tools Source Code
         if: github.event_name != 'pull_request'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: magicalbox/ardo
           token: ${{ secrets.GH_PAT }} 
@@ -109,7 +110,7 @@ jobs:
 
       - name: Checkout Build Tools Source Code
         if: github.event_name == 'pull_request'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
@@ -124,7 +125,7 @@ jobs:
       #     path: './src'
 
       - name: Get Ardour Latest Source Code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: 'Ardour/ardour'
           fetch-depth: 0
@@ -196,7 +197,7 @@ jobs:
           echo "sha256sum: ${SHA256SUM}"
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: Ardour-MacOS-${{ matrix.config.arch }}-Artifact
           path: |
